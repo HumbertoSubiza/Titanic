@@ -149,6 +149,7 @@ It has 891 lines (observations) by 12 coluns (variables)
   
  So, how many passangers survived? First construct a table and find the proportions
  
+---
 
 ```{r}
 # table
@@ -203,4 +204,44 @@ theme(legend.position = "top")
 qplot(Sex, data=train, geom="bar", fill= Survived) + 
 theme(legend.position = "top")
 ```
+
+---
+
+An insteresting investigation could be made on childs. We can expect that if a passenger is a child, there is more chance to survived. Considering a child a person with less than 16 years (?), let's see the numbers...
+
+---
+
+```{r}
+# criating a vector with the row where the passenger have less than 16 y.o.
+child <- which(train$Age < 16)
+# subsetting the train data set
+child_status <- subset(train[child,])
+# how many survived?
+summary(child_status$Survived)
+
+# let's see by Pclass
+# table with survived status by Pclass
+table(child_status$Pclass, child_status$Survived)
+# proportions
+prop.table(table(child_status$Pclass, child_status$Survived), margin = 1)
+
+
+```
+
+---
+
+From numbers, we can see the following interesting facts:
+
+  - About 40% of child died and 60% survived, almost the same figures for the total of the train dataset;
+  
+  - When looking by Pclass, we see than 83% of first class survived, 100% (!!) of second class survived and just 43 from the third class survived.
+  
+So be a child from the second or first class was a passport to survived and that characteristic has to be considered when the analysis of the final train data set would be made
+
+---
+
+data: May, 14 2017
+
+---
+
 
