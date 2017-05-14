@@ -188,6 +188,38 @@ prop.table(table(train$Sex, train$Survived), margin = 1)
 
 Similarly with gender, 468 or 81% of male died and just 109 or 19% survived.
 
+What about the port of embarkment? 
+
+---
+
+```{r}
+table(train$Embarked, train$Survived)
+round(prop.table(table(train$Embarked, train$Survived), margin = 1),2)
+```
+
+---
+
+Note there is decrement in survived (=1) from Cherbourg (France), Queenstown (now Cobh) in Ireland , up to Southampton (England).
+
+It's there a relation with port of embarkment and class?
+
+---
+
+```{r}
+table(train$Embarked, train$Pclass)
+round(prop.table(table(train$Embarked, train$Pclass), margin = 1),2)
+```
+
+---
+
+From table and proportions we can see the following facts:
+
+  - Passangers embarked at Cherbourg (France) were 61% on both 1st. and 2nd. class and that could explain that these kind of passangers survived the most
+  
+  - On the contrary, 94% passangers embarked at Queenstown (now Cobh) in Ireland were at the 3rd. class, meaning that there were poor inmigrants.
+  
+  - At Southampton (England) embarked most of passangers, being 45% between 1st. and 2nd. class and 55% on the 3rd.
+
 ---
 
 ####Visualization
