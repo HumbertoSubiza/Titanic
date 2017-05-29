@@ -272,7 +272,79 @@ So be a child from the second or first class was a passport to survived and that
 
 ---
 
-data: May, 14 2017
+some manipulations: 
+  - criate a new colum childhood, with the number 1 for being less than 16 y.o.
+  and 0 for being older.
+
+
+```{r}
+train = mutate(train, chilhood = ifelse (Age < 14,1,0))
+
+```
+
+---
+
+Load the randomForest library, set seed and calculate de random forest classifier
+```{r}
+library(randomForest)
+
+# Set seed and create a random forest classifier
+set.seed(1234)
+model_forest <- randomForest(Survived ~ Pclass +
+                               Sex + Fare +
+                               chilhood +
+                               Embarked, 
+                             data = train, 
+                             importance = TRUE, 
+                             ntree = 100, 
+                             nodesize = 1,
+                             na.action=na.exclude)
+```
+
+
+```{r}
+# predict the values in train dataset
+pred_forest_train <- predict(model_forest, train)
+
+# Observe the first few rows of your predictions
+head(pred_forest_train)
+```
+
+---
+
+####Evaluating the Random Forest
+
+access your first random forest with model_forest and predictions as pred_forest_train. 
+
+Use the library caret to view the confusion matrix for the model. 
+
+This will tell you the model's accuracy on the training set as well as other performance measures like sensitivity and specificity. 
+
+You can see this by running the following code:
+
+
+
+```{r}
+library(caret)
+confusionMatrix(pred_forest_train, train$Survived)
+```
+
+---
+
+```{r}
+# Variable Importance
+# Now it is time to take a look at how important the inputs were 
+# to your predictive model. Here, you can use:
+importance(model_forest)
+
+varImpPlot(model_forest)
+```
+
+
+```{r}
+Sys.time()
+```
+
 
 ---
 
